@@ -10,6 +10,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using User.Api.Mapper;
+using User.Data.Context;
+using User.Service.Services;
 
 namespace User.Api
 {
@@ -25,12 +30,29 @@ namespace User.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "User.Api", Version = "v1" });
             });
+
+            var connectionString = Configuration.GetConnectionString("DatabaseConnection");
+
+            services.AddDbContextPool<UserContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
+            services.AddScoped<IUserService,UserService>();
+
+
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new UserMapProfile());
+            });
+
+            var mapper = mapperConfig.CreateMapper();
+
+            services.AddSingleton(mapper);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

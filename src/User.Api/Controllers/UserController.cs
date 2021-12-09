@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using User.Api.Models.Request;
 using User.Api.Models.Response;
 using User.Core.Domain;
+using User.Service.Dto;
+using User.Service.Services;
 
 namespace User.Api.Controllers
 {
@@ -12,9 +15,13 @@ namespace User.Api.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        public UserController()
+        private readonly IUserService _userService;
+        private readonly IMapper _mapper;
+        public UserController(IUserService userService, 
+            IMapper mapper)
         {
-            
+            _userService = userService;
+            _mapper = mapper;
         }
 
         // POST: api/v1/users
@@ -23,7 +30,13 @@ namespace User.Api.Controllers
         {
             var response = new PostUserResponse();
 
-            return Ok(response);
+            var dto = _mapper.Map<PostUserRequest, UserDto>(request);
+
+            var result = await _userService.AddUser(dto);
+
+            response = _mapper.Map<UserDomain, PostUserResponse>(result);
+
+            return Created($"{Request.Host.Value}{Request.Path}/{response.UserId}", response);
         }
 
 
