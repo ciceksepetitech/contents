@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  app:
+    container_name: userservice-container
+    build:
+      context: .
+      dockerfile: src/User.Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mysql
+      - sqlapi
+     
+  mysql:
+        container_name: mysql
+        image: mysql
+        ports:
+          - "3306:3306"
+        environment:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_USER: sa
+          MYSQL_PASSWORD: 12345
+          MYSQL_DATABASE: UserDB
+  sqlapi:
+        container_name: mountebank
+        image: andyrbell/mountebank
+        ports:
+          - "8033:8033"
