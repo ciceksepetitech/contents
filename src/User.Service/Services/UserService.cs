@@ -39,7 +39,7 @@ namespace User.Service.Services
             return await GetUsersList(id,name,age);
         }
 
-        public async Task<UserDomain> GetUser(int id)
+        public async Task<UserDomain> GetUser(int id, bool includeUserTodoList)
         {
             return (await GetUsersList(id, null, 0)).FirstOrDefault();
         }

@@ -59,11 +59,11 @@ namespace User.Api.Controllers
 
         // GET: api/v1/users/1
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUser(int id)
+        public async Task<IActionResult> GetUser(int id, [FromQuery] bool includeUserTodoList)
         {
             var response = new GetUserResponse();
 
-            var result = await _userService.GetUser(id);
+            var result = await _userService.GetUser(id,includeUserTodoList);
 
             if (result == null)
                 return NotFound();
