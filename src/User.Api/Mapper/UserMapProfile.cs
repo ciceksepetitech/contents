@@ -18,6 +18,9 @@ namespace User.Api.Mapper
 
             CreateMap<UserDomain, PostUserResponse>()
                 .ReverseMap();
+
+            CreateMap<UserDomain, GetUserResponse>()
+                .ReverseMap();
         }
     }
 }

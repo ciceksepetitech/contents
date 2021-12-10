@@ -1,6 +1,8 @@
-﻿namespace User.Api.Models.Response
+﻿using User.Service.Dto;
+
+namespace User.Api.Models.Response
 {
-    public class GetUserResponse
+    public class GetUserResponse:UserDto
     {
     }
 }

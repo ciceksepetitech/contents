@@ -36,6 +36,45 @@ namespace User.Service.Services
 
         public async Task<List<UserDomain>> GetUsers(int id, string name, byte age)
         {
+            return await GetUsersList(id,name,age);
+        }
+
+        public async Task<UserDomain> GetUser(int id)
+        {
+            return (await GetUsersList(id, null, 0)).FirstOrDefault();
+        }
+
+        public async Task<bool> UpdateUser(int id, string name, byte age)
+        {
+            var user = await _userContext.Users.FirstOrDefaultAsync(x => x.UserId == id);
+
+            if (user == null)
+                return false;
+
+            user.Age=age;
+            user.Name = name;
+
+            var affectedRowCount = await _userContext.SaveChangesAsync();
+
+            return affectedRowCount > 0;
+        }
+
+        public async Task<bool> DeleteUser(int id)
+        {
+            var user = await _userContext.Users.FirstOrDefaultAsync(x => x.UserId == id);
+
+            if (user == null)
+                return false;
+
+            _userContext.Remove(user);
+
+            var affectedRowCount = await _userContext.SaveChangesAsync();
+
+            return affectedRowCount > 0;
+        }
+
+        private async Task<List<UserDomain>> GetUsersList(int id, string name, byte age)
+        {
             var userListAsQueryable = _userContext.Users.AsQueryable();
 
             if (id != default)
@@ -51,5 +90,8 @@ namespace User.Service.Services
 
             return userList;
         }
+
+
+
     }
 }

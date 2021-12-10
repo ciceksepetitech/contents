@@ -12,5 +12,8 @@ namespace User.Service.Services
     {
         Task<UserDomain> AddUser(UserDto userDto);
         Task<List<UserDomain>> GetUsers(int id, string name, byte age);
+        Task<UserDomain> GetUser(int id);
+        Task<bool> UpdateUser(int id, string name, byte age);
+        Task<bool> DeleteUser(int id);
     }
 }

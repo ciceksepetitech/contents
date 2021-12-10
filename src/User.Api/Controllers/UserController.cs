@@ -17,7 +17,7 @@ namespace User.Api.Controllers
     {
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
-        public UserController(IUserService userService, 
+        public UserController(IUserService userService,
             IMapper mapper)
         {
             _userService = userService;
@@ -59,9 +59,16 @@ namespace User.Api.Controllers
 
         // GET: api/v1/users/1
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUser([FromQuery] int id)
+        public async Task<IActionResult> GetUser(int id)
         {
             var response = new GetUserResponse();
+
+            var result = await _userService.GetUser(id);
+
+            if (result == null)
+                return NotFound();
+
+            response = _mapper.Map<UserDomain, GetUserResponse>(result);
 
             return Ok(response);
         }
@@ -69,20 +76,28 @@ namespace User.Api.Controllers
 
         // PUT: api/v1/users/1
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser([FromQuery]int id,[FromBody] PutUserRequest request)
+        public async Task<IActionResult> PutUser(int id, [FromBody] PutUserRequest request)
         {
-            var response = new PutUserResponse();
+            
+            var result = await _userService.UpdateUser(id,request.Name, request.Age);
 
-            return Ok(response);
+            if (!result)
+                return NotFound();
+
+            return NoContent();
         }
 
 
         // DELETE: api/v1/users/1
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser([FromQuery] int id)
+        public async Task<IActionResult> DeleteUser(int id)
         {
+            var result = await _userService.DeleteUser(id);
 
-            return Ok();
+            if (!result)
+                return NotFound();
+
+            return NoContent();
         }
 
 
