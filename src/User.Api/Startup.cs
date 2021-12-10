@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using User.Api.Mapper;
+using User.Core.Settings;
 using User.Data.Context;
 using User.Service.ExternalServiceClients;
 using User.Service.Services;
@@ -42,9 +43,10 @@ namespace User.Api
 
             services.AddDbContextPool<UserContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-            services.AddScoped<IUserService,UserService>();
-            services.AddScoped<ITodoService,TodoService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITodoService, TodoService>();
 
+            services.Configure<ToDoServiceSettings>(Configuration.GetSection(nameof(ToDoServiceSettings)));
 
             var mapperConfig = new MapperConfiguration(mc =>
             {
@@ -61,12 +63,10 @@ namespace User.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "User.Api v1"));
-            }
+            app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "User.Api v1"));
+
 
             app.UseRouting();
 

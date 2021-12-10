@@ -79,7 +79,7 @@ namespace User.Api.Controllers
         public async Task<IActionResult> PutUser(int id, [FromBody] PutUserRequest request)
         {
             
-            var result = await _userService.UpdateUser(id,request.Name, request.Age);
+            var result = await _userService.UpdateUser(id,request.Name, (byte)request.Age);
 
             if (!result)
                 return NotFound();

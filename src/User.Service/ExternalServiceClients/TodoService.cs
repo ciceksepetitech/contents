@@ -6,7 +6,9 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using User.Core.Settings;
 using User.Service.ExternalServiceClients.Response;
 
 namespace User.Service.ExternalServiceClients
@@ -14,8 +16,12 @@ namespace User.Service.ExternalServiceClients
     public class TodoService : ITodoService
     {
         private readonly HttpClient _httpClient;
-        public TodoService(IHttpClientFactory httpClientFactory)
+        private readonly ToDoServiceSettings _toDoServiceSettings;
+        
+        public TodoService(IHttpClientFactory httpClientFactory,
+            IOptions<ToDoServiceSettings> toDoServiceSettings)
         {
+            _toDoServiceSettings = toDoServiceSettings.Value;
             _httpClient = httpClientFactory.CreateClient();
         }
 
@@ -23,7 +29,7 @@ namespace User.Service.ExternalServiceClients
         {
             var todoResponse = new GetToDoResponse();
 
-            var response = await _httpClient.GetStringAsync($"http://localhost:5001/api/v1/todos/user/{id}");
+            var response = await _httpClient.GetStringAsync($"{_toDoServiceSettings.Url}todos/user/{id}");
 
             if (string.IsNullOrEmpty(response))
                 return todoResponse;

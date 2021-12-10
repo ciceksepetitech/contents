@@ -17,14 +17,24 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "User.Api": {
+    "User.Api.Dev": {
       "commandName": "Project",
       "launchBrowser": false,
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:5050",
+      "applicationUrl": "http://localhost:5000",
+      "dotnetRunMessages": "true"
+    },
+    "User.Api.Test": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Test"
+      },
+      "applicationUrl": "http://localhost:5000",
       "dotnetRunMessages": "true"
     },
     "Docker": {
