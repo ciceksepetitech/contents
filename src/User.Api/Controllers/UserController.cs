@@ -46,6 +46,13 @@ namespace User.Api.Controllers
         {
             var response = new GetUsersResponse();
 
+            var result = await _userService.GetUsers(request.Id, request.Name, request.Age);
+
+            var userList = _mapper.Map<List<UserDomain>, List<UserDto>>(result);
+
+            response.UserList = userList;
+            response.Count = userList.Count;
+
             return Ok(response);
         }
 

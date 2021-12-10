@@ -1,9 +1,8 @@
-﻿namespace User.Api.Models.Response
+﻿using User.Service.Dto;
+
+namespace User.Api.Models.Response
 {
-    public class PostUserResponse
+    public class PostUserResponse:UserDto
     {
-        public int UserId { get; set; }
-        public string Name { get; set; }
-        public byte Age { get; set; }
     }
 }

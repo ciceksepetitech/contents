@@ -11,5 +11,6 @@ namespace User.Service.Services
     public interface IUserService
     {
         Task<UserDomain> AddUser(UserDto userDto);
+        Task<List<UserDomain>> GetUsers(int id, string name, byte age);
     }
 }
