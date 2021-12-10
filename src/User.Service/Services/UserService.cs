@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using User.Core.Domain;
 using User.Data.Context;
 using User.Service.Dto;
+using User.Service.ExternalServiceClients;
 
 namespace User.Service.Services
 {
@@ -16,11 +17,15 @@ namespace User.Service.Services
     {
         private readonly UserContext _userContext;
         private readonly IMapper _mapper;
+        private readonly ITodoService _todoService;
+
         public UserService(UserContext userContext,
-            IMapper mapper)
+            IMapper mapper, 
+            ITodoService todoService)
         {
             _userContext = userContext;
             _mapper = mapper;
+            _todoService = todoService;
         }
 
         public async Task<UserDomain> AddUser(UserDto userDto)
@@ -39,9 +44,16 @@ namespace User.Service.Services
             return await GetUsersList(id,name,age);
         }
 
-        public async Task<UserDomain> GetUser(int id, bool includeUserTodoList)
+        public async Task<GetUserResponseDto> GetUser(int id, bool includeUserTodoList)
         {
-            return (await GetUsersList(id, null, 0)).FirstOrDefault();
+            var user = (await GetUsersList(id, null, 0)).FirstOrDefault();
+
+            var userDto = _mapper.Map<UserDomain, GetUserResponseDto>(user);
+
+            if (includeUserTodoList)
+                userDto.ToDos = (await _todoService.GetUserTodo(id))?.ToDos;
+
+            return userDto;
         }
 
         public async Task<bool> UpdateUser(int id, string name, byte age)

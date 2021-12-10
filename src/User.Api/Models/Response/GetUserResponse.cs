@@ -2,7 +2,7 @@
 
 namespace User.Api.Models.Response
 {
-    public class GetUserResponse:UserDto
+    public class GetUserResponse:GetUserResponseDto
     {
     }
 }

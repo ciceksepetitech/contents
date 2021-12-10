@@ -13,7 +13,7 @@ namespace ToDo.Api.Controllers
     public class TodoController : ControllerBase
     {
         // GET: api/v1/todos/user/1
-        [HttpGet("{id}")]
+        [HttpGet("user/{id}")]
         public async Task<IActionResult> GetToDo(int id)
         {
             return Ok(new GetToDoResponse()

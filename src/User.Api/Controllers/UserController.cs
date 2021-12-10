@@ -68,7 +68,7 @@ namespace User.Api.Controllers
             if (result == null)
                 return NotFound();
 
-            response = _mapper.Map<UserDomain, GetUserResponse>(result);
+            response = _mapper.Map<GetUserResponseDto, GetUserResponse>(result);
 
             return Ok(response);
         }

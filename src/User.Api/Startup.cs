@@ -1,19 +1,14 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using User.Api.Mapper;
 using User.Data.Context;
+using User.Service.ExternalServiceClients;
 using User.Service.Services;
 
 namespace User.Api
@@ -42,6 +37,7 @@ namespace User.Api
             services.AddDbContextPool<UserContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
             services.AddScoped<IUserService,UserService>();
+            services.AddScoped<ITodoService,TodoService>();
 
 
             var mapperConfig = new MapperConfiguration(mc =>
@@ -53,6 +49,7 @@ namespace User.Api
 
             services.AddSingleton(mapper);
 
+            services.AddHttpClient();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
