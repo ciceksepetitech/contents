@@ -37,7 +37,7 @@ services:
       MYSQL_PASSWORD: 12345
       MYSQL_DATABASE: UserDB
 
-  sqlapi:
+  mountebank:
     container_name: mountebank
     image: andyrbell/mountebank
     ports:
