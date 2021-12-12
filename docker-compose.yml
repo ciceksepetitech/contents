@@ -1,27 +1,6 @@
 version: "3"
 
 services:
-  db:
-    container_name: mysql
-    image: mysql
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: sa
-      MYSQL_PASSWORD: 12345
-      MYSQL_DATABASE: UserDB
-    networks:
-      - docker_web_network  
-
-  sqlapi:
-    container_name: mountebank
-    image: andyrbell/mountebank
-    ports:
-      - "8033:8033"
-    networks:
-      - docker_web_network  
-
   user-app:
     container_name: userservice-container
     build:
@@ -35,8 +14,6 @@ services:
     depends_on:
       - db
       - sqlapi
-    networks:
-      - docker_web_network  
 
   todo-app:
     container_name: todo-container
@@ -48,12 +25,22 @@ services:
       - ASPNETCORE_URLS=http://+:5001
     ports:
       - "5001:5001"
-    networks:
-      - docker_web_network  
+
+  db:
+    container_name: mysql
+    image: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: sa
+      MYSQL_PASSWORD: 12345
+      MYSQL_DATABASE: UserDB
+
+  sqlapi:
+    container_name: mountebank
+    image: andyrbell/mountebank
+    ports:
+      - "8033:8033"
+
      
-
-
-
-
-networks:
-  docker_web_network:
