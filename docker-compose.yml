@@ -13,7 +13,7 @@ services:
       - "5000:5000"
     depends_on:
       - db
-      - sqlapi
+      - todo-app
 
   todo-app:
     container_name: todo-container
@@ -37,10 +37,16 @@ services:
       MYSQL_PASSWORD: 12345
       MYSQL_DATABASE: UserDB
 
+  sqlapi:
+    container_name: sqlapi
+    image: techciceksepeti/sqlapi:1.6
+    ports:
+      - "8033:8033"
+
   mountebank:
     container_name: mountebank
     image: andyrbell/mountebank
     ports:
-      - "8033:8033"
+      - "2500:2500"
 
      
