@@ -3,11 +3,13 @@ using AutoMapper;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using User.Api.Filters;
 using User.Api.Mapper;
 using User.Core.Settings;
 using User.Data.Context;
@@ -28,11 +30,18 @@ namespace User.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers()
-                .AddFluentValidation(opt =>
+            services.AddControllers(opt =>
+                {
+                    opt.Filters.Add(typeof(InvalidModelStateAttribute));
+                }).AddFluentValidation(opt =>
                 {
                     opt.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-                }); ;
+                });
+
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
 
             services.AddSwaggerGen(c =>
             {
