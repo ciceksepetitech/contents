@@ -53,4 +53,13 @@ services:
     ports:
       - "2525:2525"
 
-     
+  postman_checks:
+      container_name: postman
+      build:
+        context: .
+        dockerfile: .build/Dockerfile.newman
+      image: postman_checks
+      command:
+        run https://www.getpostman.com/collections/c0e728974a070f76869a
+      volumes:
+        - ./src:/etc/newman        
