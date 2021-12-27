@@ -51,5 +51,11 @@ services:
       dockerfile: .build/Dockerfile.mountebank
     container_name: mountebank
     ports:
-      - "2525:2525" 
-      - "5025:5025" 
+      - "2525:2525"
+      - "5025:5025"
+
+  taurus:
+    build:
+      context: .
+      dockerfile: .build/Dockerfile.taurus
+    container_name: taurus
