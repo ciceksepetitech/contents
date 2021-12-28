@@ -1,0 +1,51 @@
+{
+  "port": 5025,
+  "protocol": "http",
+  "name": "todo",
+  "recordRequests": true,
+  "stubs": [
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/todos/user/10"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "body": {
+              "toDos": [
+                {
+                  "id": 1,
+                  "name": "Write a blog",
+                  "isCompleted": true,
+                  "expireDate": "2025-12-22T12:02:29.720517+00:00"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/todos/user/9"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 500
+          }
+        }
+      ]
+    }
+  ]
+}

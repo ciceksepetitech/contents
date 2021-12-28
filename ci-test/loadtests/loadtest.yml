@@ -1,0 +1,51 @@
+execution:
+- concurrency: 3
+  ramp-up: 0s
+  hold-for: 5s
+  scenario: PostUsers
+
+- concurrency: 3
+  ramp-up: 0s
+  hold-for: 5s
+  scenario: GetUsers 
+
+- concurrency: 3
+  ramp-up: 0s
+  hold-for: 5s
+  scenario: GetUsersById 
+
+- concurrency: 3
+  ramp-up: 0s
+  hold-for: 5s
+  scenario: PutUsersById  
+
+- concurrency: 3
+  ramp-up: 0s
+  hold-for: 5s
+  scenario: DeleteUsersById
+
+scenarios:
+  PostUsers:
+    script: PostUsers.jmx
+  GetUsers:
+    script: GetUsers.jmx
+  GetUsersById:
+    script: GetUsersById.jmx    
+  PutUsersById:
+    script: PutUsersById.jmx
+  DeleteUsersById:
+    script: DeleteUsersById.jmx
+
+reporting:
+- module: passfail
+  criteria:
+  - avg-rt of PostUsers>40ms, stop as failed
+  - avg-rt of GetUsers>35ms, stop as failed
+  - avg-rt of GetUsersById>35ms, stop as failed
+  - avg-rt of PutUsersById>35ms, stop as failed
+  - avg-rt of DeleteUsersById>35ms, stop as failed
+  - failures>0%, stop as failed
+  
+modules:
+  local:
+    sequential: true
