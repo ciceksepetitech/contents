@@ -9,7 +9,7 @@
         {
           "equals": {
             "method": "GET",
-            "path": "/todos/user/1"
+            "path": "/todos/user/10"
           }
         }
       ],
@@ -26,6 +26,23 @@
                 }
               ]
             }
+          }
+        }
+      ]
+    },
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/todos/user/9"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 500
           }
         }
       ]
