@@ -56,7 +56,7 @@ namespace User.Service.Services
             return userDto;
         }
 
-        public async Task<bool> UpdateUser(int id, string name, byte age)
+        public async Task<bool?> UpdateUser(int id, string name, byte age)
         {
             var user = await _userContext.Users.FirstOrDefaultAsync(x => x.UserId == id);
 

@@ -13,7 +13,7 @@ namespace User.Service.Services
         Task<UserDomain> AddUser(UserDto userDto);
         Task<List<UserDomain>> GetUsers(int id, string name, byte age);
         Task<GetUserResponseDto> GetUser(int id, bool includeUserTodoList);
-        Task<bool> UpdateUser(int id, string name, byte age);
+        Task<bool?> UpdateUser(int id, string name, byte age);
         Task<bool> DeleteUser(int id);
     }
 }

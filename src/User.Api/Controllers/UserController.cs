@@ -81,7 +81,7 @@ namespace User.Api.Controllers
             
             var result = await _userService.UpdateUser(id,request.Name, (byte)request.Age);
 
-            if (!result)
+            if (result == null)
                 return NotFound();
 
             return NoContent();
