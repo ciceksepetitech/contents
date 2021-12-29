@@ -61,7 +61,7 @@ namespace User.Service.Services
             var user = await _userContext.Users.FirstOrDefaultAsync(x => x.UserId == id);
 
             if (user == null)
-                return false;
+                return null;
 
             user.Age=age;
             user.Name = name;
