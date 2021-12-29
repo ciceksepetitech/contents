@@ -1,39 +1,5 @@
 {
-	"imposters": [
-	  {
-		"port": 5025,
-		"protocol": "http",
-		"name": "origin",
-		"stubs": [
-		  {
-			"predicates": [
-			  {
-				"equals": {
-				  "query": {
-					"apiKey": "api-key1"
-				  }
-				}
-			  },
-			  {
-				"equals": {
-				  "method": "GET",
-				  "path": "/Users"
-				}
-			  }
-			],
-			"responses": [
-			  {
-				"is": {
-				  "body": {
-					"user": {
-					  "userId": 100
-					}
-				  }
-				}
-			  }
-			]
-          }
-          ]
-	  }
-	]
-  }
+  "imposters": [
+  <% include todo.ejs %>
+  ]
+}

@@ -1,0 +1,3 @@
+FROM techciceksepeti/loadtest:0.32
+
+ADD ./ci-test/loadtests /bzt-configs
