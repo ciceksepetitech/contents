@@ -2,30 +2,27 @@ execution:
 - concurrency: 3
   ramp-up: 0s
   hold-for: 5s
-  iterations: 1  
   scenario: GetUser
 
 - concurrency: 3
   ramp-up: 0s
   hold-for: 5s
-  iterations: 1  
   scenario: GetUserById 
 
 - concurrency: 3
   ramp-up: 0s
   hold-for: 5s
-  iterations: 1  
   scenario: PutUser
 
-- concurrency: 3
+- concurrency: 1
   ramp-up: 0s
-  hold-for: 5s
+  hold-for: 1s
   iterations: 1  
   scenario: DeleteUser
 
-- concurrency: 3
+- concurrency: 1
   ramp-up: 0s
-  hold-for: 5s
+  hold-for: 1s
   iterations: 1  
   scenario: PostUser  
 
